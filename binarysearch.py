@@ -1,59 +1,42 @@
+# Python program to demonstrate
+# insert operation in binary search tree
 class Node:
-    def __init__(self, data):
-        self.data = data
+    def __init__(self, key):
         self.left = None
         self.right = None
-class BST:
-    def __init__(self):
-        self.root = None
+        self.val = key
 
-    def insert(self, data):
-        self.root = self._insert(self.root, data)
 
-    def _insert(self, node, data):
-        if node is None:
-            return Node(data)
-        if data < node.data:
-            node.left = self._insert(node.left, data)
-        elif data > node.data:
-            node.right = self._insert(node.right, data)
-        return node
+# A utility function to insert
+# a new node with the given key
+def insert(root, key):
+    if root is None:
+        return Node(key)
+    if root.val == key:
+            return root
+    if root.val < key:
+            root.right = insert(root.right, key)
+    else:
+            root.left = insert(root.left, key)
+    return root
 
-    def search(self, data):
-        return self._search(self.root, data)
 
-    def _search(self, node, data):
-        if node is None or node.data == data:
-            return node
-        if data < node.data:
-            return self._search(node.left, data)
-        else:
-            return self._search(node.right, data)
+# A utility function to do inorder tree traversal
+def inorder(root):
+    if root:
+        inorder(root.left)
+        print(root.val, end=" ")
+        inorder(root.right)
 
-    def inorder(self):
-        self._inorder(self.root)
-        print()
 
-    def _inorder(self, node):
-        if node:
-            self._inorder(node.left)
-            print(node.data, end=' ')
-            self._inorder(node.right)
-          bst = BST()
-bst.insert(50)
-bst.insert(30)
-bst.insert(70)
-bst.insert(20)
-bst.insert(40)
-bst.insert(60)
-bst.insert(80)
+r = Node(15)
+r = insert(r, 10)
+r = insert(r, 18)
+r = insert(r, 4)
+r = insert(r, 11)
+r = insert(r, 16)
+r = insert(r, 20)
+r = insert(r, 13)
 
-print("Inorder Traversal:")
-bst.inorder()
-
-result = bst.search(40)
-if result:
-    print("Found:", result.data)
-else:
-    print("Not Found")
-
+# Print inorder traversal of the BST
+inorder(r)
